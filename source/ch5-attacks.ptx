@@ -16,7 +16,7 @@
 						<title>MitM</title>
 
 						<figure xml:id="fig-mitm">
-						<caption></caption>
+						<caption>Man-in-the-Middle (MitM)</caption>
 						<image source="mitm.svg">
 							<shortdescription>Diagram illustrating a Man-in-the-Middle (MitM) attack where an attacker intercepts communication between a user and a web server.</shortdescription>
 							<description>
@@ -32,7 +32,7 @@
 					</p>
 
 						<figure xml:id="fig-mitm-keys">
-						<caption></caption>
+						<caption>Man-in-the-Middle Sequence of Communications</caption>
 						<image source="mitm-keys.svg">
 							<shortdescription>Diagram illustrating a Man-in-the-Middle (MitM) attack during a public key exchange, where the attacker substitutes their own public key.</shortdescription>
 							<description>
@@ -56,7 +56,7 @@
 					</p>
 
 						<figure xml:id="fig-mitb">
-						<caption></caption>
+						<caption> Man-in-the-Browser Attack</caption>
 						<image source="mitb.svg">
 							<shortdescription>Diagram illustrating a Man-in-the-Browser (MitB) attack where malware on a user's workstation alters a financial transaction without the user's knowledge.</shortdescription>
 							<description>
@@ -90,8 +90,8 @@
 						<title>SSL Circumvention</title>
 
 						<figure xml:id="fig-ssl-mitm">
-						<caption></caption>
-						<image source="ssl-mitm.svg">
+						<caption>SSL Circumvention Attack</caption>
+						<image source="ssl-mitm.svg" width="50%">
 							<shortdescription>Sequence diagram illustrating an SSL Man-in-the-Middle attack where an attacker intercepts communications, prevents an HTTPS upgrade for the victim, and captures plaintext credentials.</shortdescription>
 							<description>
 							<p>The diagram shows interactions between a "Victim," an "Attacker," and a "Server" to illustrate an SSL circumvention attack. The Victim initiates a connection by sending a "GET http://njit.edu" request, which is intercepted by the Attacker. The Attacker forwards this GET request to the Server. The Server responds with a "301 Moved" redirect, typically indicating a move to HTTPS. The Attacker receives this redirect but does not forward it to the Victim. Instead, the Attacker initiates its own "GET https://njit.edu" request to the Server, establishing a secure HTTPS connection. The Server responds to the Attacker with "200 OK (HTTPS)". The Attacker then sends a "200 OK (HTTP)" response back to the Victim, deceiving the Victim into believing they are communicating over a standard HTTP connection with the server and that no HTTPS upgrade occurred. Subsequently, the Victim sends their credentials, "POST http://njit.edu username=admin password=admin," over this unencrypted HTTP connection to the Attacker. The Attacker, having captured the plaintext credentials, can then forward this POST request, potentially over a secure HTTPS connection ("POST https://njit.edu username=admin password=admin"), to the legitimate Server. This allows the attacker to intercept sensitive information while the victim believes their session is normal, albeit unencrypted as presented by the attacker.</p>
@@ -138,7 +138,7 @@
 						<title>ARP Poisoning</title>
 						
 						<figure xml:id="fig-arp-spoofing">
-						<caption></caption>
+						<caption>ARP Spoofing</caption>
 						<image source="arp.svg">
 							<shortdescription>Diagram comparing network routing under normal operation with routing subject to ARP cache poisoning, where a malicious user intercepts traffic.</shortdescription>
 							<description>
@@ -165,7 +165,7 @@
 						<title>IP Spoofing</title>
 						
 						<figure xml:id="fig-ip-header">
-						<caption></caption>
+						<caption>IP Packet Header</caption>
 						<image source="ip-header.svg">
 							<shortdescription>Diagram illustrating the structure of an IP packet header, with fields humorously annotated to highlight the concept of IP spoofing.</shortdescription>
 							<description>
@@ -183,7 +183,7 @@
 							<title>Smurf Attack</title>
 
 							<figure xml:id="fig-smurf-attack">
-							<caption></caption>
+							<caption>Smurf Attack</caption>
 							<image source="smurf.png">
 								<shortdescription>Diagram illustrating a Smurf attack, where an attacker uses a broadcast network to flood a target with ICMP echo replies by spoofing the target's IP address.</shortdescription>
 								<description>
@@ -360,7 +360,7 @@
 						<title>SSRF</title>
 						
 						<figure xml:id="fig-ssrf-attack">
-						<caption></caption>
+						<caption>Server-Side Request Forgery (SSRF)</caption>
 						<image source="ssrf.svg">
 							<shortdescription>Diagram illustrating a Server-Side Request Forgery (SSRF) attack where an attacker tricks a web server into making requests to an internal network resource.</shortdescription>
 							<description>
@@ -538,7 +538,7 @@ $statement = "SELECT * FROM users WHERE name='" + $userName + "' AND password='"
 					</p>
 						
 						<figure xml:id="fig-privilege-escalation">
-						<caption></caption>
+						<caption>Privilege Escalation</caption>
 						<image source="escalation.svg">
 							<shortdescription>Diagram illustrating the concept of privilege escalation using steps of increasing height representing different user access levels.</shortdescription>
 							<description>
@@ -612,7 +612,7 @@ $statement = "SELECT * FROM users WHERE name='" + $userName + "' AND password='"
 				</section>
 				<section xml:id="lab-mitm-with-scapy">
 					<title>Lab: MitM with Scapy</title>
-					
+					<introduction>
 					<p>
 						In this lab we will use a fake SSH server, 
 						<url href="https://github.com/jaksi/sshesame">sshesame</url>, and an interactive packet manipulation program, 
@@ -646,15 +646,61 @@ $statement = "SELECT * FROM users WHERE name='" + $userName + "' AND password='"
 					<p>
 					For this lab our IP addresses are configured statically and are known to the attacker. It is also assumed that the attacker is on the local network. Lastly victim has been poorly configured to ignore changes to the host key. This is not entirely unreasonable as many users just ignore the warnings and clear out the known_hosts file when prompted anyway.
 				</p>
+									</introduction>
+					<subsection xml:id="MitM-codespace">
+						<title>MitM with Scapy in a Github Codespace</title>
+						<p>
+							Go <url href="https://github.com/pearcej/security-scapy">github.com/pearcej/security-scapy</url>. Then:
+							<ol>
+								<li>
+									<p>
+										Fork this codespace into your own Github repository.
+									</p>
+								</li>
+								<li>
+									<p>
+										Navigate to your repository on GitHub.
+									</p>
+								</li>
+								<li>
+									<p>
+										Click the green Code button and select Codespaces.
+									</p>
+								</li>
+								<li>
+									<p>
+										Click "Create codespace on main".
+									</p>
+								</li>
+								<li>
+									<p>
+										Wait for the codespace to be created.
+									</p>
+								</li>
+							</ol>
+						Be sure to either stop or delete this codespace when you are doneby clicking the "Stop" button or the "Delete" button in the Codespaces tab of your repository. 
+						</p>
+						<p>
+						Next, jump down to follow the lab directions in <xref ref="MitM-continue" />. 
+						</p>
+					</subsection>
 					
+					<subsection xml:id="MitM-local">
+						<title>MitM with Scapy in a Local Docker Container</title>				
 					<p>
 						Start by downloading the 
-						<url href="https://github.com/rxt1077/it230/raw/main/labs/scapy.zip">scapy.zip</url> file which contains the Docker Compose configuration we will be using. Uncompress it to a directory where you have write access. This lab will require us to use three terminal windows/tabs: one for the 
+						<url href="https://github.com/rxt1077/it230/raw/main/labs/scapy.zip">scapy.zip</url> file which contains the Docker Compose configuration we will be using. Uncompress it to a directory where you have write access. 
+					</p>
+					</subsection>
+					<subsection xml:id="MitM-continue">
+						<title>Continue with the MitM with Scapy Lab</title>
+						<p>
+						This lab will require us to use three terminal windows/tabs: one for the 
 						<c>docker-compose up</c> command which will show the output of everything running in the background, one for the victim which will show an SSH session with the server, and one for the attacker which we will use to make the attack.
 					</p>
 					
 					<figure xml:id="fig-scapy-lab-setup">
-					<caption></caption>
+					<caption>MitM with Scapy Lab Set-up</caption>
 					<image source="scapy.svg">
 						<shortdescription>Illustration of three terminal windows representing a lab setup involving Docker Compose, a victim machine, and an attacker machine using Scapy.</shortdescription>
 						<description>
@@ -680,7 +726,7 @@ $statement = "SELECT * FROM users WHERE name='" + $userName + "' AND password='"
 					</p>
 
 					<p>
-					docker-compose up
+					<c>docker-compose up</c>
 				</p>
 					<pre>PS C:\Users\rxt1077\it230\labs\scapy&gt; docker-compose up
 Creating network "scapy_testnet" with the default driver
@@ -750,7 +796,7 @@ server_1    | Server listening on :: port 22.</pre>
 					</p>
 					
 					<p>
-					victim
+					<c>victim</c>
 				</p>
 					
 					<pre>PS C:\Users\rxt1077\it230\labs\scapy&gt; docker-compose run victim bash
@@ -786,7 +832,7 @@ bf9ebe42a108:~#</pre>
 					</p>
 					
 					<p>
-					attacker
+					<c>attacker</c>
 				</p>
 
 					<pre>PS C:\Users\rxt1077\it230\labs\scapy&gt; docker-compose exec attacker bash
@@ -828,7 +874,7 @@ root@5195de3d330c:/# ip addr
 					</p>
 					
 					<p>
-					attacker
+					<c>attacker</c>
 				</p>
 					
 					<pre>root@5195de3d330c:/# scapy
@@ -862,11 +908,10 @@ AutoCompletion, History are disabled.
 					<p>
 					You’ll notice that scapy’s prompt is &gt;&gt;&gt;, just like python because it 
 						<em>is</em> python. Since we’re working in python, let’s make our lives easier by defining a few simple variables:
-				
 					</p>
 
 					<p>
-					attacker
+					<c>attacker</c>
 				</p>
 
 					<pre>&gt;&gt;&gt; server_ip = "172.20.0.5" (1)
@@ -886,7 +931,7 @@ AutoCompletion, History are disabled.
 				</p>
 
 					<p>
-					attacker
+					<c>attacker</c>
 				</p>
 
 					<pre>&gt;&gt;&gt; ping = Ether()/IP(dst=server_ip)/ICMP()/"Ryan Tolboom" (1)
@@ -982,18 +1027,18 @@ Received 2 packets, got 1 answers, remaining 0 packets
 				
 					</p>
 
-					<question>
+					<note>
 						<p>
-							Take a screenshot of your scapy session at this point showing that you completed an ICMP echo request/response with your name in it.
+							Your instructor may wish for you to take a screenshot of your scapy session at this point showing that you completed an ICMP echo request/response with your name in it.
 						</p>
-					</question>
+					</note>
 					
 					<p>
 					We can also determine MAC addresses at Layer 2 with an ARP "who-has" request. Let’s craft and send a broadcast ethernet frame with an ARP "who-has" request for the victims’s IP address. The result will tell use what the victim’s MAC address is:
 				</p>
 
 					<p>
-					attacker
+					<c>attacker</c>
 				</p>
 
 					<pre>&gt;&gt;&gt; whohas = Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst=victim_ip)
@@ -1039,7 +1084,7 @@ Received 1 packets, got 1 answers, remaining 0 packets
 					We have everything we need to create an ARP packet telling the victim to send traffic to us when they are trying to access servers IP:
 				</p>
 					<p>
-					attacker
+					<c>attacker</c>
 				</p>
 
 					<pre>&gt;&gt;&gt; victim_ip, victim_mac, server_ip, server_mac
@@ -1050,7 +1095,7 @@ Received 1 packets, got 1 answers, remaining 0 packets
 				</p>
 
 					<p>
-					attacker
+					<c>attacker</c>
 				</p>
 
 					<pre>&gt;&gt;&gt; bad_arp = ARP(op=2, pdst=victim_ip, psrc=server_ip, hwdst=victim_mac)
@@ -1067,10 +1112,11 @@ Received 1 packets, got 1 answers, remaining 0 packets
 				</p>
 
 					<p>
-					attacker
+					<c>attacker</c>
 				</p>
 
-					<pre>&gt;&gt;&gt; send(bad_arp)
+					<pre>
+&gt;&gt;&gt; send(bad_arp)
 .
 Sent 1 packets.</pre>
 
@@ -1079,7 +1125,7 @@ Sent 1 packets.</pre>
 				</p>
 
 					<p>
-					victim
+					<c>victim</c>
 				</p>
 					<pre>You are now logged into 'server' (presumably from 'victim') via SSH for this assignment.
 Leave this connection open while you experiment with scapy from 'attacker'.
@@ -1104,7 +1150,7 @@ root@server's password:
 					</p>
 
 					<p>
-					docker-compose up terminal
+					<c>docker-compose up terminal</c>
 				</p>
 
 					<pre>attacker_1  | 2021/10/07 01:21:41 [172.20.0.6:60252] authentication for user "root" with password "password" accepted</pre>
@@ -1138,7 +1184,12 @@ why not?
 						<c>docker-compose up</c>, exit out of the victim, and exit out of the attacker.
 				
 					</p>
-					
+					<note>
+						<p>
+							If you chose to use a Github codespace, don't forget to stop or delete the codespace by clicking the "Stop" button or the "Delete" button in the Codespaces tab of your repository.
+						</p>
+					</note>
+				</subsection>
 				</section>
 				<section xml:id="attacks-review">
 					<title>Review Questions</title>
@@ -1161,5 +1212,6 @@ why not?
 							</li>
 						</ol>
 					</p>
+
 				</section>
 </chapter>
