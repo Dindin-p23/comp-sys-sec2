@@ -636,7 +636,7 @@ cleartext = (11**29)%91 = 72 (decrypted using N and d)
 					Start by running a <c>bash</c> shell in the terminal on a custom Linux container:
 				</p>
 					<pre>ryan@R90VJ3MK:/windir/c/Users/rxt1077/it230/docs$ docker run -it ryantolboom/hash
-root@8e0962021f85:/</pre>
+root@vm-name:/</pre>
 
 		<note>
 		<p>
@@ -653,16 +653,16 @@ root@8e0962021f85:/</pre>
 					<subsection xml:id="md5-hash">
 						<title>MD5 Hash</title>
 					<p>
-					MD5 is a message-digest algorithm that produces significantly better hashes than our Anagram algorithm. Most Linux distributions include a simple utility for creating an MD5 hash based on a file’s contents. This command is named md5sum. Typically this is used to detect if a file has been tampered with. A website may provide links to download software as well as an MD5 hash of the files so that you know what you’ve downloaded is correct. Similarly a security system may keep md5sums (MD5 hashes) of certain critical files to determine if they have been tampered with by malware. Let’s practice taking the md5sum of the 
-						<c>/etc/passwd</c> file:
+					MD5 is a message-digest algorithm that produces significantly better hashes than our Anagram algorithm. Most Linux distributions include a simple utility for creating an MD5 hash based on a file’s contents. This command is named <c>md5sum</c>. Typically this is used to detect if a file has been tampered with. A website may provide links to download software as well as an MD5 hash of the files so that you know what you’ve downloaded is correct. Similarly a security system may keep md5sums (MD5 hashes) of certain critical files to determine if they have been tampered with by malware. Let’s practice taking the md5sum of the 
+						<c>/etc/passwd</c> file. Note that <c>root@vm-name:/#</c> is the prompt in the terminal, indicating that we are running as root on a container named <c>vm-name</c>. Your will appear differently.
 				
 					</p>
 
-					<pre>root@8e0962021f85:/# md5sum /etc/passwd
+					<pre>root@vm-name:/# md5sum /etc/passwd
 9911b793a6ca29ad14ab9cb40671c5d7  /etc/passwd</pre>
 <note>
-	<p>
-		The first part of this line is the MD5 hash, the second part is the file name.
+	<p> The first line above is the prompt followed by the command <c>md5sum /etc/passwd</c>. The second line is the output of the command, which is the MD5 hash of the contents of the file <c>/etc/passwd</c>. The output is in two parts separated by a space.
+		The first part of the output line, namely <c>9911b793a6ca29ad14ab9cb40671c5d7</c> is the MD5 hash, the second part, namely <c>/etc/passwd</c>is the file name.
 	</p>
 </note>
 
@@ -671,18 +671,21 @@ root@8e0962021f85:/</pre>
 						<em>your</em> first name in it and store it in <c>/tmp/name.txt</c>:
 				
 					</p>
-					<pre>root@8e0962021f85:/# echo "&lt;your_name&gt;" &gt;&gt; /tmp/name.txt</pre>
+					<pre>root@vm-name:/# echo "&lt;your_name&gt;" &gt;&gt; /tmp/name.txt</pre>
 					<note>
-						<p>Substitute your actual first name for &lt;your_name&gt;</p>
+						<p>Substitute your actual first name for &lt;your_name&gt;, but be sure to include the quotation marks.</p>
 					</note>
+					<p>
+						The <c>cat</c> command in Linux is used to display the contents of files, concatenate multiple files, and create new files, so you can see the contents of the new file by running: <c>cat /tmp/name.txt</c>. 
+					</p>
 					
                     <question>
                     <p>
-                      What is the md5sum of <c>/tmp/name.txt</c>?
+                      What is the <c>md5sum</c> of your first name which is stored in <c>/tmp/name.txt</c>? (You can run the command <c>md5sum /tmp/name.txt</c> to find out.)
                     </p>  
                     </question>
 					<p>
-					For our final activity, lets take a look at some of the weaknesses of hashes.
+					For our final lab activity, lets take a look at some of the weaknesses of hashes.
 				</p>
 					<p>
 						<term>Hash Cracking</term>
@@ -692,7 +695,7 @@ root@8e0962021f85:/</pre>
 						<c>/etc/shadow</c> file. Let’s print out the contents of that file to see how it looks:
 				
 					</p>
-					<pre>root@7f978dd90746:/# cat /etc/shadow
+					<pre>root@vm-name:/# cat /etc/shadow
 root:*:19219:0:99999:7:::
 daemon:*:19219:0:99999:7:::
 bin:*:19219:0:99999:7:::
@@ -718,16 +721,16 @@ karl:$y$j9T$oR2ZofMTuH3dpEGbw6c/y.$TwfvHgCl4sIp0b28YTepJ3YVvl/3UyWKeLCmDV1tAd9:1
 							</p>
 						</note>
 					<p>
-					One of the problems with hashes are that if people choose simple passwords, they can be easily cracked by a program that takes a wordlist of common passwords, generates their hashes, and then checks to see if the hash is the same. While a hash may be a one-way function, it is still subject to this type of attack. We’re use a program called 
+					One of the problems with hashes are that if people choose simple passwords, they can be easily cracked by a program that takes a wordlist of common passwords, generates their hashes, and then checks to see if the hash is the same. While a hash may be a one-way function, it is still subject to this type of attack. We will use a program called 
 						<url href="https://www.openwall.com/john/">John the Ripper</url> and do exactly that.
 				
 					</p>
 					<p>
-					John the Ripper is already installed on this container along with a simple wordlist. We will tell it to use the default wordlist to try and determine what the password is that matches karl’s hash in 
+					John the Ripper (aka John) is already installed on this container along with a simple wordlist. We will tell it to use the default wordlist to try and determine what the password is that matches karl’s hash in 
 						<c>/etc/shadow</c>:
 				
 					</p>
-					<pre>root@8e0962021f85:/# john --format=crypt --wordlist=/usr/share/john/password.lst /etc/shadow
+					<pre>root@vm-name:/# john --format=crypt --wordlist=/usr/share/john/password.lst /etc/shadow
 Loaded 1 password hash (crypt, generic crypt(3) [?/64])
 Press 'q' or Ctrl-C to abort, almost any other key for status
 &lt;karl's password&gt;             (karl)
@@ -736,7 +739,7 @@ Use the "--show" option to display all of the cracked passwords reliably
 Session completed</pre>
 					
             <note>
-                <p>Once john has cracked a password it will not show it if you run it again. To 
+                <p>Once John has cracked a password it will not show it if you run it again. To 
 				    <em>show</em> the passwords that have already been cracked you must run the 
 					<c>--show</c> command with the file: 
 					<c>john --show /etc/shadow</c>
@@ -744,35 +747,67 @@ Session completed</pre>
             </note>
 					<p>
 					Given that the password is in the included common password wordlist, 
-						<c>/usr/share/john/password.lst</c>, you will quickly find that John the Ripper figures out that karl’s password. John the Ripper can also run incrementally though all the possible character combinations, but it takes much longer. To help make these types of attacks more difficult, every hash in 
+						<c>/usr/share/john/password.lst</c>, you will quickly find that John the Ripper figures out karl’s password. John the Ripper can also run incrementally though all the possible character combinations, but it takes much longer. To help make these types of attacks more difficult, every hash in 
 						<c>/etc/shadow</c> is built off of a random number. This number is called a 
-						<em>salt</em> and is stored with the hash. This means that instead of just trying one hash for each word in the wordlist, the hash cracker must try every possible salt for every word in the wordlist, slowing things down significantly. Modern hash crackers may use 
-						<url href="https://en.wikipedia.org/wiki/Rainbow_table">rainbow tables</url> so that all of the possible hashes have already been computed. These tables may take up terabytes of disk space, but can make cracking even complicated hashes much simpler.
+						<idx><h>salt</h></idx><term>salt</term> and is stored with the hash. This means that instead of just trying one hash for each word in the wordlist, the hash cracker must try every possible salt for every word in the wordlist, slowing things down significantly. Modern hash crackers may use <idx><h>rainbow tables</h></idx>
+						<url href="https://en.wikipedia.org/wiki/Rainbow_table"><term>rainbow tables</term></url> so that all of the possible hashes have already been computed. These tables may take up terabytes of disk space, but can make cracking even complicated hashes much simpler.
 				
 					</p>
 					<p>
 					Let’s use a custom utility named 
-						<c>`crypt</c> to show that we have the actual password. This utility is already installed on your container. We will start by printing out just the line in 
-						<c>/etc/shadow</c> that has karl’s info. We will use the 
+						<c>crypt</c> to show that we have the actual password. This utility is already installed on your container. We will start by printing out just the line in 
+						<c>/etc/shadow</c> that has karl’s info. The Linux <c>grep</c> command is a powerful search tool. (The name is an acronym from <b>G</b>lobally search for a Regular Expression and Print matches.) We will use the 
 						<c>grep</c> command to limit out output to things that have 
 						<c>karl</c> in them:
 				
 					</p>
-					<pre>root@7f978dd90746:/# cat /etc/shadow | grep karl
+					<pre>root@vm-name:/# cat /etc/shadow | grep karl
 karl:$y$j9T$oR2ZofMTuH3dpEGbw6c/y.$TwfvHgCl4sIp0b28YTepJ3YVvl/3UyWKeLCmDV1tAd9:19255:0:99999:7:::</pre>
 					<p>
-					The first part of the shadow line is the username, karl. The next part of the shadow line, immediately following the first colon, is the hash information. The characters in between the first set of 
-						<c>$</c> is the version of the hashing algorithm being used, 
-						<c>y</c> for yescrypt in our case. The characters in between the second set of 
-						<c>$</c> are the parameters passed to yescrypt which will always be 
-						<c>j9T</c> for us. The characters in between the third set of 
-						<c>$</c> is your salt. Finally the characters in between the fourth set of 
-						<c>$</c> is the hash.
+						<ul>
+							<li>
+								<p>
+								Colons, <c>:</c>, are used as separators in the shadow file. The first part of the shadow line is the username,
+								<c>karl</c>.
+								
+								</p>
+							</li>
+							<li>
+								<p>
+									The next part of the shadow line, immediately following the first colon, is the hash information, namely <c>$y$j9T$oR2ZofMTuH3dpEGbw6c/y.$TwfvHgCl4sIp0b28YTepJ3YVvl/3UyWKeLCmDV1tAd9</c>.
+								</p></li>
+								<li><p>
+									
+									The characters in between the first set of dollar signs, 
+						<c>$</c>, is the version of the hashing algorithm being used, 
+						<c>y</c> for yescrypt in our case.
+								</p>
+							</li>
+							<li>
+								<p>
+									The characters in between the second set of 
+						dollar signs are the parameters passed to yescrypt which will always be 
+						<c>j9T</c> for us.
+								</p>
+							</li>
+							<li>
+								<p>
+									The characters <c>oR2ZofMTuH3dpEGbw6c/y.</c> in between the third set of 
+						dollar signs is the salt.
+								</p>
+							</li>
+							<li>
+								<p>
+									Finally the characters <c>TwfvHgCl4sIp0b28YTepJ3YVvl/3UyWKeLCmDV1tAd9</c> in between the fourth  
+						<c>$</c> and the <c>:</c> is the hash itself.
+								</p>
+							</li>
+						</ul>
+					   
 				
 					</p>
 					<p>
-					The [
-						<c>crypt</c>] utility calls the system 
+					The <c>crypt</c> utility calls the system 
 						<url href="https://man7.org/linux/man-pages/man3/crypt.3.html">
 							<c>crypt</c>
 						</url> command and prints the output. Let’s run this utility with the password we’ve cracked and the first three parts of the hash information from 
@@ -780,16 +815,16 @@ karl:$y$j9T$oR2ZofMTuH3dpEGbw6c/y.$TwfvHgCl4sIp0b28YTepJ3YVvl/3UyWKeLCmDV1tAd9:1
 						<c>/etc/shadow</c>:
 				
 					</p>
-					<pre>root@7f978dd90746:/# crypt &lt;karl's password&gt; '$y$j9T$oR2ZofMTuH3dpEGbw6c/y.'
+					<pre>root@vm-name:/# crypt &lt;karl's password&gt; '$y$j9T$oR2ZofMTuH3dpEGbw6c/y.'
 $y$j9T$oR2ZofMTuH3dpEGbw6c/y.$TwfvHgCl4sIp0b28YTepJ3YVvl/3UyWKeLCmDV1tAd9</pre>
 					<note>
 						<p>
-							Don’t forget to use the actual password you cracked and put the hash info in single quotes
+							Don’t forget to use the actual password you cracked and put the hash info in single quotes.
 						</p>
 					</note>
 					
                     <question><p>Submit a screenshot with your lab showing that the output of the
-						<c>crypt</c> command matches the hash in /etc/shadow</p></question>
+						<c>crypt</c> command matches the hash in <c>/etc/shadow</c></p></question>.
 						<note>
 						<p>
 							If you chose to use a Github codespace, don't forget to stop or delete the codespace by clicking the "Stop" button or the "Delete" button in the Codespaces tab of your repository.
