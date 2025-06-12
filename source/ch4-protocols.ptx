@@ -425,39 +425,39 @@
 									<cell halign="left">Code</cell>
 									<cell halign="left">Message</cell>
 								</row>
-								<row class="odd">
+								<row>
 									<cell halign="left">200</cell>
 									<cell halign="left">OK</cell>
 								</row>
-								<row class="even">
+								<row>
 									<cell halign="left">202</cell>
 									<cell halign="left">Accepted</cell>
 								</row>
-								<row class="odd">
+								<row>
 									<cell halign="left">400</cell>
 									<cell halign="left">Bad Request</cell>
 								</row>
-								<row class="even">
+								<row>
 									<cell halign="left">401</cell>
 									<cell halign="left">Unauthorized</cell>
 								</row>
-								<row class="odd">
+								<row>
 									<cell halign="left">403</cell>
 									<cell halign="left">Forbidden</cell>
 								</row>
-								<row class="even">
+								<row>
 									<cell halign="left">404</cell>
 									<cell halign="left">Not Found</cell>
 								</row>
-								<row class="odd">
+								<row>
 									<cell halign="left">500</cell>
 									<cell halign="left">Internal Server Error</cell>
 								</row>
-								<row class="even">
+								<row>
 									<cell halign="left">502</cell>
 									<cell halign="left">Bad Gateway</cell>
 								</row>
-								<row class="odd">
+								<row>
 									<cell halign="left">503</cell>
 									<cell halign="left">Service Unavailable</cell>
 								</row>

@@ -202,7 +202,7 @@
 				</section>
 				<section xml:id="lab-malicious-containers">
 					<title>Lab: Malicious Containers</title>
-
+<introduction>
 					<p>
 					While containers have made it much easier to deploy software, they have also made it easier to deploy 
 						<em>malicious</em> software. Imagine that we have an internal company website, written in PHP and deployed in a Docker container. Given the layered nature of the Docker build system, this application is 
@@ -219,11 +219,60 @@ COPY index.php /var/www/html/index.php</pre>
 						<c>shell.php</c> is a shell written in PHP that will execute with the permissions of the web server. This means it will be able to read and write (but not overwrite) in the /var/www/html directory.
 				
 					</p>
-
+				</introduction>
+					<subsection xml:id="malicious-codespace">
+						<title>Malicious Containers in a Github Codespace</title>
+						<p>
+							Go <url href="https://github.com/pearcej/security-malicious">github.com/pearcej/security-malicious</url>. Then:
+							<ol>
+								<li>
+									<p>
+										Fork this codespace into your own Github repository.
+									</p>
+								</li>
+								<li>
+									<p>
+										Navigate to your repository on GitHub.
+									</p>
+								</li>
+								<li>
+									<p>
+										Click the green Code button and select Codespaces.
+									</p>
+								</li>
+								<li>
+									<p>
+										Click "Create codespace on main".
+									</p>
+								</li>
+								<li>
+									<p>
+										Wait for the codespace to be created.
+									</p>
+								</li>
+							</ol>
+						Be sure to either stop or delete this codespace when you are done by clicking the "Stop" button or the "Delete" button in the Codespaces tab of your repository. 
+						</p>
+						<p>
+						Next, jump down to follow the lab directions in <xref ref="log4j-continue" />. 
+						</p>
+					</subsection>
+				<subsection xml:id="malicious-local">
+					<title>Malicious Containers in a Local Docker installation</title>
 					<p>
 					Let’s download, build, and run this image. Download 
 						<url href="https://github.com/rxt1077/it230/raw/main/labs/malicious.zip">the malicious.zip file</url>, unzip it in a directory where you have write access, and navigate to that directory in your shell.
 				
+					</p>
+					</subsection>
+										
+					<subsection xml:id="malicious-continue">
+						<title>Lab Instructions for Malicious Containers</title>
+
+					<p>
+						(1) Build the image and tag it 
+									<c>malicious</c> by running <c>docker build -t malicious .</c>, but don’t forget the 
+									<c>.</c> at the end! 
 					</p>
 
 					<pre>PS C:\Users\rxt1077\it230\labs\malicious&gt; docker build -t malicious . (1)
@@ -241,59 +290,72 @@ COPY index.php /var/www/html/index.php</pre>
  =&gt; exporting to image                                                                                                                                                                                      0.1s
  =&gt; =&gt; exporting layers                                                                                                                                                                                     0.0s
  =&gt; =&gt; writing image sha256:e1dc75a91b2e269091069b1e3406a496b4bbfd95b066f970062ea8b3a74d8368                                                                                                                0.0s
- =&gt; =&gt; naming to docker.io/library/malicious                                                                                                                                                                0.0s
+ =&gt; =&gt; naming to docker.io/library/malicious   
+					</pre>
+					<p>
+						(2) Run the <c>malicious</c> image and forward local port 8080 to port 80 in the container by running <c>docker run -p 8080:80 malicious</c>.
+					</p>  <pre>                                                                                                                                                           0.0s
 PS C:\Users\rxt1077\it230\labs\malicious&gt; docker run -p 8080:80 malicious (2)
 AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.17.0.2. Set the 'ServerName' directive globally to suppress this message
 AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.17.0.2. Set the 'ServerName' directive globally to suppress this message
 [Wed Jul 13 02:25:57.082000 2022] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.54 (Debian) PHP/8.1.8 configured -- resuming normal operations
 [Wed Jul 13 02:25:57.082089 2022] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'</pre>
-
-					<table>
-						<title>Instructions</title>
-						<tabular>
-							<row>
-								<cell halign="left">
-									<term>1</term>
-								</cell>
-								<cell halign="left">Build the image and tag it 
-									<c>malicious</c>, don’t foget the 
-									<c>.</c> at the end!
-								</cell>
-							</row>
-							<row>
-								<cell halign="left">
-									<term>2</term>
-								</cell>
-								<cell halign="left">Run the 
-									<c>malicious</c> image and forward local port 8080 to port 80 in the container
-								</cell>
-							</row>
-						</tabular>
-					</table>
-
-					<p>
-					Now you should be able to navigate to 
+					<p> To see your webpage, do the following:
+						<ul>
+							<li>
+								<p>
+									If you are using a Github codespace, you should be able to navigate to the "Ports" tab, change the visibility from private to public, and then under forwarded address, control-click the link, which will look something like <c>https://silly-name-jjxwj676vgc5j75-8080.app.github.dev/</c> to open a new tab in your browser to see see the default web page. Note that may get a warning from Github that "You are about to access a development port served by someone else's codespace." If you do, you will need to click "Continue" to proceed to the page.
+								</p>
+							</li>
+							<li>
+								<p>
+									If you are in a local Docker container, you should be able to navigate to open a tab in your browser and go to
 						<url href="http://localhost:8080">http://localhost:8080</url> to see the default web page.
+								</p>
+							</li>
+						</ul>
+					
 				
 					</p>
-					<question>
-						
-					<p>
-					What’s for lunch?
-				</p>
-				</question>
+				<exercise label = "fillin-whats-4-lunch" xml:id="fillin-whats-4-lunch">
+        <statement>
+<p>What's for lunch'?<var/></p></statement><setup><var>
+<condition string="burnt toast and sorrow"><feedback><p>Right! Sounds great, doesn't it?</p></feedback></condition>
+<condition string="^\s*default\s*$"><feedback><p>Incorrect. Copy and paste it from the webpage. Please try again.</p></feedback></condition></var></setup>
+
+</exercise> 
 
 					<p>
 					Now based on the information in the Dockerfile, get a shell on the compromised web server.
 				</p>
+				<hint>
+					<p>
+						Add <c>/shell.php</c> to access the web shell.
+					</p>
+				</hint>
 					<question>
 						
 					<p>
-					Notice of the time off request on the main page doesn’t work? From your shell, create a new web page on the server named timeoff.html with the text GRANTED. What command did you use to make the new file? What happens now when you click on the time off link?
+					Did you notice that the time-off request on the main page doesn’t work? </p></question>
+					<p>
+						From your shell, create a new web page on the server named timeoff.html with the text GRANTED. 
+					</p>
+<hint>
+	<p>
+	To create a new file, you can use the <c>echo</c> command to write text to a file. 
+	</p>
+</hint>	
+<question>
+			<p>What command did you use to make the new file? What happens now when you click on the time off link?
 			
 					</p>
 					</question>
-
+										<note>
+						<p>
+							If you chose to use a Github codespace, don't forget to stop or delete the codespace by clicking the "Stop" button or the "Delete" button in the Codespaces tab of your repository.
+						</p>
+						</note>
+			</subsection>
 				</section>
 				<section xml:id="virtualization-review">
 					<title>Review Questions</title>

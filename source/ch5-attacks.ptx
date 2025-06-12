@@ -329,11 +329,6 @@
 							</url>.
 					
 						</p>
-						<p>
-						Now Samy is a prominent security consultant and you can read 
-							<url href="https://samy.pl/myspace/tech.html">his full technical explanation of the worm here</url>. Vice Motherboard also did a segment on Samy for their 
-							<url href="https://www.youtube.com/watch?v=DtnuaHl378M"><em>Greatest Moments in Hacking History</em> series</url>.
-						</p>
 						
 						</example>
 					
@@ -765,20 +760,25 @@ server_1    | &gt;&gt; Running: /etc/entrypoint.d/changepw.sh
 server_1    | Running /usr/sbin/sshd -D -e -f /etc/ssh/sshd_config
 server_1    | Server listening on 0.0.0.0 port 22. (2)
 server_1    | Server listening on :: port 22.</pre>
+<note>
+	<title>Things to note in the previous codeblock</title>
+	
+	
 					<p>
-					 <ol>
+					 <ul>
 						<li>
 							<p>	
-								Notice that attacker has a fake SSH server running in the background
+								(1) Notice that attacker has a fake SSH server running in the background.
 							</p>
 						</li>
 						<li>
 							<p>
-								Notice that server has a legitimate SSH server running in the background
+								(2) Notice that server has a legitimate SSH server running in the background.
 							</p>
 						</li>
-					 </ol>
+					 </ul>
 					</p>
+				</note>
 					<note>
 						<p>
 							If you receive the error 
@@ -801,18 +801,16 @@ server_1    | Server listening on :: port 22.</pre>
 Creating scapy_victim_run ... done
 bash-5.0# ssh server
 Warning: Permanently added 'server,172.20.0.5' (ECDSA) to the list of known hosts.
-root@server's password: (1)
+root@server's password: (3)
 You are now logged into 'server' (presumably from 'victim') via SSH for this assignment.
 Leave this connection open while you experiment with scapy from 'attacker'.
 bf9ebe42a108:~#</pre>
 				<p>
-					<ol>
-						<li>
+					<note>
 							<p>
-								The password is "password". It will not be echoed to the screen as you type it.
+								(3) The password is "password". It will not be echoed to the screen as you type it.
 							</p>
-						</li>
-					</ol>
+					</note>
 				</p>			
 					<note>
 						<p>
@@ -846,25 +844,28 @@ root@5195de3d330c:/# ip addr
     link/sit 0.0.0.0 brd 0.0.0.0
 347: eth0@if348: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UP group default
     link/ether 02:42:ac:14:00:07 brd ff:ff:ff:ff:ff:ff link-netnsid 0
-    inet 172.20.0.7/24 brd 172.20.0.255 scope global eth0 (1)
+    inet 172.20.0.7/24 brd 172.20.0.255 scope global eth0 (4)
        valid_lft forever preferred_lft forever
-    inet 172.20.0.5/32 scope global eth0 (2)
+    inet 172.20.0.5/32 scope global eth0 (5)
        valid_lft forever preferred_lft forever</pre>
+	   <note>
+		<title>Things to note in previous code</title>
+	
 					<p>
-					 <ol>
+					 <ul>
 						<li>
 							<p>
-								This is the IP we started with
+								(4) This is the IP we started with.
 							</p>
 						</li>
 						<li>
 							<p>
-								This is an additional IP that attacker believes it has
+								(5) This is an additional IP that attacker believes it has.
 							</p>
 						</li>
-					 </ol>
+					 </ul>
 					</p>
-					
+				</note>
 					<p>
 					Now that the attacker system is configured, we’ll start up 
 						<c>scapy</c> interactively:
@@ -912,16 +913,15 @@ AutoCompletion, History are disabled.
 					<c>attacker</c>
 				</p>
 
-					<pre>&gt;&gt;&gt; server_ip = "172.20.0.5" (1)
+					<pre>&gt;&gt;&gt; server_ip = "172.20.0.5" (6)
 &gt;&gt;&gt; victim_ip = "172.20.0.6"</pre>
 					<p>
-					<ol>
-						<li>
+					<note>
 							<p>
-								IPv4 addresses are strings in scapy
+								(6) IPv4 addresses are strings in scapy.
 							</p>
-						</li>
-					</ol>
+						</note>
+
 				</p>
 					
 					<p>
@@ -932,8 +932,8 @@ AutoCompletion, History are disabled.
 					<c>attacker</c>
 				</p>
 
-					<pre>&gt;&gt;&gt; ping = Ether()/IP(dst=server_ip)/ICMP()/"Ryan Tolboom" (1)
-&gt;&gt;&gt; ping.show() (2)
+					<pre>&gt;&gt;&gt; ping = Ether()/IP(dst=server_ip)/ICMP()/"Ryan Tolboom" (7)
+&gt;&gt;&gt; ping.show() (8)
 ###[ Ethernet ]###
   dst       = 02:42:ac:14:00:05
   src       = 02:42:ac:14:00:07
@@ -962,7 +962,7 @@ AutoCompletion, History are disabled.
 ###[ Raw ]###
            load      = 'Ryan Tolboom'
 
-&gt;&gt;&gt; result = srp1(ping) (3)
+&gt;&gt;&gt; result = srp1(ping) (9)
 Begin emission:
 Finished sending 1 packets.
 .*
@@ -999,26 +999,30 @@ Received 2 packets, got 1 answers, remaining 0 packets
 &gt;&gt;&gt; server_mac = result[0][0].src
 &gt;&gt;&gt; server_mac
 '02:42:ac:14:00:05'</pre>
-					<p>
-					<ol>
+
+						<note>
+							<title>Things to note in the previous codeblock</title>
+						
+												<p>
+					<ul>
 						<li>
 							<p>
-								Scapy uses the '/' operator to nest protocols. This is my name in an ICMP packet, in an IP packet, in an Ethernet frame. Be sure you use your own name!
+								(7) Scapy uses the '/' operator to nest protocols. This is my name in an ICMP packet, in an IP packet, in an Ethernet frame. Be sure you use your own name!
 							</p>
 						</li>
 						<li>
 							<p>
-								The <c>show()</c> command prints out packets in detail
+								(8) The <c>show()</c> command prints out packets in detail.
 							</p>
 						</li>
 						<li>
 							<p>
-								The <c>srp1()</c> function sends and receives <em>one</em> packet at Layer 2
+								(9) The <c>srp1()</c> function sends and receives <em>one</em> packet at Layer 2.
 							</p>
 						</li>
-					</ol>
+					</ul>
 					</p>
-					
+				</note>
 					<p>
 					Notice how we use this to capture the server’s MAC address and save it in the 
 						<c>server_mac</c> variable.
@@ -1048,7 +1052,7 @@ Received 1 packets, got 1 answers, remaining 0 packets
 &gt;&gt;&gt; result.show()
 ###[ Ethernet ]###
   dst       = 02:42:ac:14:00:07
-  src       = 02:42:ac:14:00:06 (1)
+  src       = 02:42:ac:14:00:06 (10)
   type      = ARP
 ###[ ARP ]###
      hwtype    = 0x1
@@ -1063,13 +1067,11 @@ Received 1 packets, got 1 answers, remaining 0 packets
 
 &gt;&gt;&gt; victim_mac = result[0].src</pre>
 					<p>
-					<ol>
-						<li>
+					<note>
 							<p>
-								This is my MAC address of victim, but yours may be different!
+								(10) This is my MAC address of victim, but yours will likely be different!
 							</p>
-						</li>
-					</ol>
+						</note>
 					</p>
 					
 					<p>
@@ -1127,19 +1129,17 @@ Sent 1 packets.</pre>
 				</p>
 					<pre>You are now logged into 'server' (presumably from 'victim') via SSH for this assignment.
 Leave this connection open while you experiment with scapy from 'attacker'.
-bf9ebe42a108:~# client_loop: send disconnect: Broken pipe (1)
+bf9ebe42a108:~# client_loop: send disconnect: Broken pipe (11)
 bash-5.0# ssh server
 Warning: Permanently added 'server,172.20.0.5' (ECDSA) to the list of known hosts.
 root@server's password:
 #</pre>
 					<p>
-					 <ol>
-						<li>
+					 <note>
 							<p>
-								This happened when they tried to type something right after we sent the malicious ARP
+								(11) This happened when they tried to type something right after we sent the malicious ARP.
 							</p>
-						</li>
-					 </ol>
+						</note>
 					</p>
 					<p>
 					Wait, that prompt looks a little different and where’s the message about staying logged in? It turns out the victim actually signed into our fake SSH server and their username and password were logged! Take a look at the output from the terminal running 
@@ -1158,14 +1158,12 @@ root@server's password:
 						<ol>
 							<li>
 								<p>
-									How would you create an ARP packet in scapy to reverse the change you made
-previously and fix the route?
+									How would you create an ARP packet in scapy to reverse the change that you made previously and fix the route?
 								</p>
 							</li>
 							<li>
 								<p>
-									Would using keys instead of passwords help prevent this kind of attack? Why or
-why not?
+									Would using keys instead of passwords help prevent this kind of attack? Why or why not?
 								</p>
 							</li>
 							<li>
