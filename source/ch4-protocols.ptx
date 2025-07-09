@@ -741,9 +741,14 @@
 					</p>
 
 					<table>
-						<title></title>
+						<title>OSI Model to TCP/IP Model and Protocol Examples</title>
 						<tabular>
 							<row header="yes">
+								<cell halign="left">OSI Layer</cell>
+								<cell halign="left">TCP/IP Layer</cell>
+								<cell halign="left">Protocol Examples</cell>
+							</row>
+							<row>
 								<cell halign="left">1. Physical</cell>
 								<cell halign="left">Network Access</cell>
 								<cell halign="left">Wi-Fi</cell>
@@ -778,11 +783,19 @@
 							<row>
 								<cell halign="left">7. Application</cell>
 								<cell halign="left">Application</cell>
-								<cell halign="left">HTTP, HTTPS, DNS, FTP, DHCP, SMTP, SNMP, IMAP, POP3, LDAP, NTP</cell>
+								<cell halign="left">HTTP, HTTPS, DNS, FTP, DHCP,</cell>
+							</row>
+							<row>
+								<cell halign="left"></cell>
+								<cell halign="left"></cell>
+								<cell halign="left">SMTP, SNMP, IMAP, POP3, LDAP, NTP</cell>
 							</row>
 						</tabular>
 					</table>
-
+					<p>
+						This table shows how the OSI model maps to the TCP/IP model and provides examples of protocols at each layer. The OSI model's seven layers correspond to the four layers of the TCP/IP model, with some layers combining functions.
+						It's also helpful when trying to figure out where something is going wrong or where a system might be vulnerable, since you can narrow things down to a specific layer.
+					</p>
 				</section>
 
 				<section xml:id="lab-scanning-with-nmap">
