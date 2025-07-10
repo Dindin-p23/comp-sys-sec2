@@ -19,7 +19,7 @@
   					<subsection xml:id="osi-model">
 						<title>The OSI Model</title>
 						<p>
-							The <term>Open Systems Interconnection</term> (<term>OSI</term>) model describes.
+							The <idx>open systems interconnection</idx><idx>OSI</idx><term>Open Systems Interconnection</term> (<term>OSI</term>) model describes.
 						</p>
 						
 					</subsection>
