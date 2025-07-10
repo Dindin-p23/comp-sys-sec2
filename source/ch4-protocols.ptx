@@ -1065,12 +1065,17 @@ Nmap done: 1 IP address (1 host up) scanned in 28.39 seconds</pre>
 						<url href="https://linux.die.net/man/1/ftp">This man page may be of some help.</url>
 					</p>
 
-
 					<question>
 						<p>
 							BONUS: Remembering what you learned in the <em>Hash it Out</em> lab, what is the root password on the victim machine?
 						</p>
 					</question>
+
+					<hint>
+						<p>
+     					Try locating the shadow file copy in the victim’s shared directory.
+                        </p>
+					</hint>
 					
 					<question>
 						<p>
